@@ -36,6 +36,11 @@
        (filter even?)
        (reduce +)))
 
+(defn largest-prime-factor
+  "Find the largest prime factor of the given number."
+  [num]
+  nil)
+
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
 (defn solve-problem
@@ -78,7 +83,11 @@
                    {:problem-id 2
                     :title "Even Fibonacci Numbers"
                     :input [4000000]
-                    :execute even-fibonacci}])
+                    :execute even-fibonacci}
+                   {:problem-id 3
+                    :title "Largest Prime Factor"
+                    :input [600851475143]
+                    :execute largest-prime-factor}])
 
 ;; ...Engage!
 (defn -main
