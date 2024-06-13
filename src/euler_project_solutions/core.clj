@@ -2,8 +2,17 @@
   (:gen-class))
 
 (defn multiples-of-three-or-five
-  [num]
-  num)
+  "Find the sum of all multiples of three or five below the target."
+  [target]
+  (let [mult-of-num (fn [num multiple] (= (mod num multiple) 0))]
+    (loop [current-num 0
+           sum 0]
+      (if (>= current-num target) 
+        sum
+        (recur (inc current-num)
+               (if (or (mult-of-num current-num 3) (mult-of-num current-num 5))
+                 (+ sum current-num)
+                 sum))))))
 
 (defn prompt-menu
   "Print the menu of available solutions to run."
