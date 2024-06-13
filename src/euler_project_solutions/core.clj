@@ -1,8 +1,12 @@
 (ns euler-project-solutions.core
   (:gen-class))
 
+(defn multiples-of-three-or-five
+  [num]
+  num)
+
 (defn prompt-menu
-  "Prompt the user for a Project Euler solution to run."
+  "Print the menu of available solutions to run."
   [solutions]
   (println "Please select a solution to run.")
   (loop [to-print solutions]
@@ -12,14 +16,20 @@
       (when (seq remaining)
         (recur remaining)))))
 
-(comment
-  (prompt-menu [[1 "Test Test"] [2 "Test 2"] [3 "Test 3"]]))
+(defn select-problem
+  "Prompt the user for the solution to run."
+  [options]
+  (prompt-menu (map (fn [opt] [(:problem-id opt) (:title opt)]) options))
+  (print " >> ")
+  (let [selection (Integer/parseInt (read-line))
+        selected (first (filter (fn [opt] (= (:problem-id opt) selection)) options))]
+    (apply (:execute selected) (:input selected))))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& _]
   (let [menu-options [{:problem-id 1
                        :title "Multiples of 3 or 5"
-                       :input 1000
-                       :execute nil}]]
-    menu-options))
+                       :input [1000]
+                       :execute multiples-of-three-or-five}]]
+    (select-problem menu-options)))
