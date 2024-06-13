@@ -2,6 +2,14 @@
   (:gen-class))
 
 ;; ? UTILS ----------------------------------------------------------------------------------------
+(defn divisors
+  [num]
+  (filter #(= 0 (mod num %)) (range 1 (inc num))))
+
+(defn is-prime
+  [num]
+  (= [1 num] (vec (divisors num))))
+
 ;; credit: example from https://clojuredocs.org/clojure.core/lazy-seq
 (defn fib
     ([]
@@ -10,6 +18,11 @@
      (lazy-seq (cons a (fib b (+ a b))))))
 
 ;; comments for testing utils via REPL
+(comment
+  (divisors 13195)
+  (-> 13195
+      divisors))
+
 (comment
   (take 10 (fib))
   (take-while (partial > 1000) (fib)))
