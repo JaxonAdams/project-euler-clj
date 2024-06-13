@@ -1,6 +1,7 @@
 (ns euler-project-solutions.core
   (:gen-class))
 
+;; *** PROJECT EULER SOLUTIONS ***
 (defn multiples-of-three-or-five
   "Find the sum of all multiples of three or five below the target."
   [target]
@@ -14,6 +15,8 @@
                  (+ sum current-num)
                  sum))))))
 
+;; ! ----------------------------------------------------------------------------------------------
+;; prompt all options available for the user to select
 (defn prompt-menu
   "Print the menu of available solutions to run."
   [solutions]
@@ -27,6 +30,7 @@
         (recur remaining))))
   (println))
 
+;; select and run a problem's solution
 (defn select-problem
   "Prompt the user for the solution to run."
   [options]
@@ -40,6 +44,7 @@
                     :input [1000]
                     :execute multiples-of-three-or-five}])
 
+;; ...Engage!
 (defn -main
   "I don't do a whole lot ... yet."
   [& _]
