@@ -16,6 +16,17 @@
                  sum))))))
 
 ;; ! ----------------------------------------------------------------------------------------------
+;; solve the selected problem
+(defn solve-problem
+  "Execute the function related to the given problem with any required input values."
+  [solution]
+  (let [solved (apply (:execute solution) (:input solution))
+        problem-title (:title solution)
+        input-vals (:input solution)]
+  (println (str "\nProblem: " problem-title))
+  (println (str "Input: " input-vals))
+  (println (str "Solution: " solved))))
+
 ;; prompt all options available for the user to select
 (defn prompt-menu
   "Print the menu of available solutions to run."
@@ -35,9 +46,8 @@
   "Prompt the user for the solution to run."
   [options]
   (prompt-menu (map (fn [opt] [(:problem-id opt) (:title opt)]) options))
-  (let [selection (Integer/parseInt (read-line))
-        selected (first (filter (fn [opt] (= (:problem-id opt) selection)) options))]
-    (apply (:execute selected) (:input selected))))
+  (let [selection (Integer/parseInt (read-line))]
+    (first (filter (fn [opt] (= (:problem-id opt) selection)) options))))
 
 (def menu-options [{:problem-id 1
                     :title "Multiples of 3 or 5"
@@ -49,7 +59,7 @@
   "I don't do a whole lot ... yet."
   [& _]
     (try
-      (let [solution (select-problem menu-options)]
-        (println (str "Solution: " solution)))
+      (let [selected (select-problem menu-options)]
+        (solve-problem selected))
       (catch NullPointerException _ (println "Not a valid selection."))
       (catch NumberFormatException _ (println "Please make a selection by entering a valid number."))))
