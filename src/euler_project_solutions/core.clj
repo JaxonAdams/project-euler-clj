@@ -35,15 +35,16 @@
         selected (first (filter (fn [opt] (= (:problem-id opt) selection)) options))]
     (apply (:execute selected) (:input selected))))
 
+(def menu-options [{:problem-id 1
+                    :title "Multiples of 3 or 5"
+                    :input [1000]
+                    :execute multiples-of-three-or-five}])
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& _]
-  (let [menu-options [{:problem-id 1
-                       :title "Multiples of 3 or 5"
-                       :input [1000]
-                       :execute multiples-of-three-or-five}]]
     (try
       (let [solution (select-problem menu-options)]
         (println (str "Solution: " solution)))
       (catch NullPointerException _ (println "Not a valid selection."))
-      (catch NumberFormatException _ (println "Please make a selection by entering a valid number.")))))
+      (catch NumberFormatException _ (println "Please make a selection by entering a valid number."))))
