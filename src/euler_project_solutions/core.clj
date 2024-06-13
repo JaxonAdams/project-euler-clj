@@ -1,6 +1,18 @@
 (ns euler-project-solutions.core
   (:gen-class))
 
+;; ? UTILS ----------------------------------------------------------------------------------------
+;; credit: example from https://clojuredocs.org/clojure.core/lazy-seq
+(defn fib
+    ([]
+     (fib 1 1))
+    ([a b]
+     (lazy-seq (cons a (fib b (+ a b))))))
+
+(comment
+  (take 10 (fib))
+  (take-while (partial > 1000) (fib)))
+
 ;; *** PROJECT EULER SOLUTIONS ***
 (defn multiples-of-three-or-five
   "Find the sum of all multiples of three or five below the target."
@@ -14,6 +26,14 @@
                (if (or (mult-of-num current-num 3) (mult-of-num current-num 5))
                  (+ sum current-num)
                  sum))))))
+
+(defn even-fibonacci
+  "Find the sum of the even-valued terms in the Fibonacci sequence below the target."
+  [target]
+  (->> (fib)
+       (take-while (partial > target))
+       (filter even?)
+       (reduce +)))
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
@@ -49,10 +69,15 @@
   (let [selection (Integer/parseInt (read-line))]
     (first (filter (fn [opt] (= (:problem-id opt) selection)) options))))
 
+;; menu select options
 (def menu-options [{:problem-id 1
                     :title "Multiples of 3 or 5"
                     :input [1000]
-                    :execute multiples-of-three-or-five}])
+                    :execute multiples-of-three-or-five}
+                   {:problem-id 2
+                    :title "Even Fibonacci Numbers"
+                    :input [4000000]
+                    :execute even-fibonacci}])
 
 ;; ...Engage!
 (defn -main
