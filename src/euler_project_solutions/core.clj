@@ -9,11 +9,12 @@
     ([a b]
      (lazy-seq (cons a (fib b (+ a b))))))
 
+;; comments for testing utils via REPL
 (comment
   (take 10 (fib))
   (take-while (partial > 1000) (fib)))
 
-;; *** PROJECT EULER SOLUTIONS ***
+;; *** PROJECT EULER SOLUTIONS *** ----------------------------------------------------------------
 (defn multiples-of-three-or-five
   "Find the sum of all multiples of three or five below the target."
   [target]
