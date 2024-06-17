@@ -4,9 +4,9 @@
 ;; ? UTILS ----------------------------------------------------------------------------------------
 (defn divisors
   [num]
-  (filter #(= 0 (mod num %)) (range 1 (inc num))))
+  (filter #(= 0 (mod num %)) (range 2 num)))
 
-(defn is-prime
+(defn is-prime?
   [num]
   (= [1 num] (vec (divisors num))))
 
@@ -19,9 +19,7 @@
 
 ;; comments for testing utils via REPL
 (comment
-  (divisors 13195)
-  (-> 13195
-      divisors))
+  (divisors 13195))
 
 (comment
   (take 10 (fib))
@@ -52,7 +50,20 @@
 (defn largest-prime-factor
   "Find the largest prime factor of the given number."
   [num]
-  nil)
+  (loop [to-process (divisors num)
+         primes #{}]
+    (let [new-primes (into primes (filter is-prime? to-process))
+          new-to-process (->> to-process
+                              (filter #(not (is-prime? %)))
+                              (map divisors)
+                              flatten)]
+      (println [new-primes new-to-process])
+      (if (seq new-to-process)
+        (recur new-to-process new-primes)
+        (apply max new-primes)))))
+
+;; taking too long to run... more efficient solution?
+(comment (largest-prime-factor 600851475143))
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
