@@ -50,19 +50,19 @@
 (defn largest-prime-factor
   "Find the largest prime factor of the given number."
   [num]
-  (loop [to-process (divisors num)
-         primes #{}]
-    (let [new-primes (into primes (filter is-prime? to-process))
-          new-to-process (->> to-process
-                              (filter #(not (is-prime? %)))
-                              (map divisors)
-                              flatten)]
-      (println [new-primes new-to-process])
-      (if (seq new-to-process)
-        (recur new-to-process new-primes)
-        (apply max new-primes)))))
+  (letfn [(smallest-factor [n]
+            (loop [i 2]
+              (cond
+                (> (* i i) n) n ; If no smaller factor found, n is prime
+                (zero? (mod n i)) i
+                :else (recur (inc i)))))]
+    (loop [n num
+           largest 0]
+      (let [factor (smallest-factor n)]
+        (if (= factor n)
+          (max largest n) ; If n is prime, it's the largest factor
+          (recur (/ n factor) (max largest factor)))))))
 
-;; taking too long to run... more efficient solution?
 (comment (largest-prime-factor 600851475143))
 
 ;; ! ----------------------------------------------------------------------------------------------
