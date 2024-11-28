@@ -63,7 +63,14 @@
           (max largest n) ; If n is prime, it's the largest factor
           (recur (/ n factor) (max largest factor)))))))
 
-(comment (largest-prime-factor 600851475143))
+(defn largest-palindrome-product
+  "Find the largest palindrome made from the product of two 3-digit numbers."
+  []
+  (let [products (for [x (range 100 1000) y (range 100 1000)]
+                   (* x y))]
+    (->> products
+         (filter #(= (str %) (apply str (reverse (str %)))))
+         (apply max))))
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
@@ -111,7 +118,11 @@
                    {:problem-id 3
                     :title "Largest Prime Factor"
                     :input [600851475143]
-                    :execute largest-prime-factor}])
+                    :execute largest-prime-factor}
+                   {:problem-id 4
+                    :title "Largest Palindrome Product"
+                    :input []
+                    :execute largest-palindrome-product}])
 
 ;; ...Engage!
 (defn -main
