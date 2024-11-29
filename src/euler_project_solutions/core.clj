@@ -1,5 +1,7 @@
 (ns euler-project-solutions.core
-  (:gen-class))
+  (:gen-class) 
+  (:require
+   [clojure.set :as set]))
 
 ;; ? UTILS ----------------------------------------------------------------------------------------
 (defn divisors
@@ -17,9 +19,21 @@
     ([a b]
      (lazy-seq (cons a (fib b (+ a b))))))
 
+(defn greatest-common-divisor
+  [a b]
+  (let [a-divisors (->> a divisors (into #{}))
+        b-divisors (->> b divisors (into #{}))
+        common-divisors (set/intersection a-divisors b-divisors)]
+    (->> common-divisors
+         (into [])
+         (apply max))))
+
 ;; comments for testing utils via REPL
 (comment
   (divisors 13195))
+
+(comment
+  (greatest-common-divisor 21 6))
 
 (comment
   (take 10 (fib))
@@ -72,6 +86,11 @@
          (filter #(= (str %) (apply str (reverse (str %)))))
          (apply max))))
 
+(defn smallest-multiple
+  "Find the smallest number divisible by all numbers in the given range."
+  [start end]
+  nil)
+
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
 (defn solve-problem
@@ -122,7 +141,11 @@
                    {:problem-id 4
                     :title "Largest Palindrome Product"
                     :input []
-                    :execute largest-palindrome-product}])
+                    :execute largest-palindrome-product}
+                   {:problem-id 5
+                    :title "Smallest Multiple"
+                    :input [1 20]
+                    :execute smallest-multiple}])
 
 ;; ...Engage!
 (defn -main
