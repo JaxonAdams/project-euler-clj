@@ -10,7 +10,18 @@
 
 (defn is-prime?
   [num]
-  (= [1 num] (vec (divisors num))))
+  (= 0 (count (vec (divisors num)))))
+
+(defn next-prime
+  [num]
+  (loop [current num]
+    (if (is-prime? current)
+      current
+      (recur (inc current)))))
+
+(defn prime-numbers
+  ([] (prime-numbers 2))
+  ([n] (lazy-seq (cons n (prime-numbers (next-prime (inc n)))))))
 
 (defn is-divisor?
   [a b]
@@ -111,6 +122,11 @@
         squared-sum (* (reduce + nums) (reduce + nums))]
     (- squared-sum sum-of-squares)))
 
+(defn nth-prime
+  "Find the nth prime number."
+  [n]
+  n)
+
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
 (defn solve-problem
@@ -167,9 +183,13 @@
                     :input [1 20]
                     :execute smallest-multiple}
                    {:problem-id 6
-                   :title "Sum Square Difference"
-                   :input [1 100]
-                   :execute sum-square-difference}])
+                    :title "Sum Square Difference"
+                    :input [1 100]
+                    :execute sum-square-difference}
+                   {:problem-id 7
+                   :title "10,001st Prime"
+                   :input [10001]
+                   :execute nth-prime}])
 
 ;; ...Engage!
 (defn -main
