@@ -12,6 +12,10 @@
   [num]
   (= [1 num] (vec (divisors num))))
 
+(defn is-divisor?
+  [a b]
+  (zero? (mod a b)))
+
 ;; credit: example from https://clojuredocs.org/clojure.core/lazy-seq
 (defn fib
     ([]
@@ -89,7 +93,15 @@
 (defn smallest-multiple
   "Find the smallest number divisible by all numbers in the given range."
   [start end]
-  nil)
+  ;; Brute-force solution, will revisit later
+  (let [to-check (range start (inc end))]
+    (loop [current end]
+      (if-not (= (count to-check) (count (filter (partial is-divisor? current) to-check)))
+        (recur (inc current))
+        current))))
+
+(comment
+  (smallest-multiple 1 10))
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
