@@ -101,10 +101,15 @@
         current))))
 
 (defn sum-square-difference
-  "Find the difference between the sum of the squares of the first one hundred natural
-   numbers and the square of the sum."
-  []
-  -1)
+  "Find the difference between the sum of the squares of the numbers in the given range
+  and the square of the sum."
+  [start end]
+  (let [nums (range start (inc end))
+        sum-of-squares (->> nums
+                            (map #(* % %))
+                            (reduce +))
+        squared-sum (* (reduce + nums) (reduce + nums))]
+    (- squared-sum sum-of-squares)))
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
@@ -163,7 +168,7 @@
                     :execute smallest-multiple}
                    {:problem-id 6
                    :title "Sum Square Difference"
-                   :input []
+                   :input [1 100]
                    :execute sum-square-difference}])
 
 ;; ...Engage!
