@@ -100,8 +100,11 @@
         (recur (inc current))
         current))))
 
-(comment
-  (smallest-multiple 1 10))
+(defn sum-square-difference
+  "Find the difference between the sum of the squares of the first one hundred natural
+   numbers and the square of the sum."
+  []
+  -1)
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
@@ -157,7 +160,11 @@
                    {:problem-id 5
                     :title "Smallest Multiple"
                     :input [1 20]
-                    :execute smallest-multiple}])
+                    :execute smallest-multiple}
+                   {:problem-id 6
+                   :title "Sum Square Difference"
+                   :input []
+                   :execute sum-square-difference}])
 
 ;; ...Engage!
 (defn -main
