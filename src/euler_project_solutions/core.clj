@@ -125,7 +125,9 @@
 (defn nth-prime
   "Find the nth prime number."
   [n]
-  n)
+  (-> n
+      (take (prime-numbers))
+      last))
 
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
