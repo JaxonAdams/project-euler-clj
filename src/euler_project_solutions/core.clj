@@ -11,7 +11,7 @@
 
 (defn is-prime?
   [num]
-  (= 0 (count (vec (divisors num)))))
+  (= 0 (count (vec ((memoize divisors) num)))))
 
 (defn next-prime
   [num]
@@ -154,6 +154,15 @@
                             (= (+ (* a a) (* b b)) (* c c))) possible-operands)]
     (reduce * (first triplets))))
 
+(defn summation-of-primes
+  "Find the summation of primes below the given limit."
+  [limit]
+  ;; Brute-force solution; will revisit later
+  (reduce + (take-while (partial > limit) (prime-numbers))))
+
+(comment
+  (summation-of-primes 10))
+
 ;; ! ----------------------------------------------------------------------------------------------
 ;; solve the selected problem
 (defn solve-problem
@@ -224,7 +233,11 @@
                    {:problem-id 9
                     :title "Special Pythagorean Triplet"
                     :input [1000]
-                    :execute special-pythagorean-triplet}])
+                    :execute special-pythagorean-triplet}
+                   {:problem-id 10
+                    :title "Summation of Primes"
+                    :input [2000000]
+                    :execute summation-of-primes}])
 
 ;; ...Engage!
 (defn -main
